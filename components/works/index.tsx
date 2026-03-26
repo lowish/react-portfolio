@@ -11,7 +11,7 @@ const projects = [
 
   {
     title: "HomeVia",
-    image: "/HomeVia.jpg",
+    image: "/homevia.jpg",
     url: "https://homevia-eta.vercel.app/",
     description:
       "HomeVia is a real estate platform. It showcases properties in the Philippines, helping users explore and discover their perfect place to live..",
