@@ -1,0 +1,21 @@
+Prince Tan
+Full-Stack Developer
+
+Summary
+Full-stack developer focused on modern, user-centered web applications.
+
+Skills
+- Next.js
+- React
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB
+- MySQL
+
+Links
+LinkedIn: https://www.linkedin.com/in/pwtandev
+GitHub: https://github.com/lowish
+
+Email
+hello@example.com
