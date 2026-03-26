@@ -11,7 +11,7 @@ export function Contact() {
     <footer id="contact" className="relative">
       {/* Main CTA */}
       <motion.a
-        href="mailto:hello@example.com"
+        href="mailto:lowishxx@gmail.com"
         data-cursor-hover
         className="relative block overflow-hidden"
         onMouseEnter={() => setIsHovered(true)}
@@ -78,7 +78,7 @@ export function Contact() {
             {[
               { name: "LinkedIn", url: "https://www.linkedin.com/in/pwtandev" },
               { name: "GitHub", url: "https://github.com/lowish" },
-              { name: "Instagram", url: "https://instagram.com/yourprofile" },
+              { name: "Instagram", url: "https://www.instagram.com/lowishxx/" },
             ].map((link) => (
               <a
                 key={link.name}
