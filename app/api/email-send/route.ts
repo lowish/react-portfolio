@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     }
 
     const response = await resend.emails.send({
-      from: 'Prince Tan <lowishxx@gmail.com>',
+      from: 'onboarding@resend.dev',
       to: toEmail,
       subject: `New message from ${name}`,
       html: `
