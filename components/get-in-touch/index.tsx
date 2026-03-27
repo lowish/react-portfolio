@@ -29,6 +29,7 @@ function GetInTouchDialog() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -41,19 +42,36 @@ function GetInTouchDialog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(null)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
+    try {
+      const response = await fetch("/api/email-send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Failed to send message")
+      }
+
       setIsSubmitted(true)
       setFormData({ name: "", email: "", message: "" })
 
-      // Reset success message after 2 seconds
       setTimeout(() => {
         setIsSubmitted(false)
         setOpen(false)
       }, 2000)
-    }, 1000)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Something went wrong"
+      setSubmitError(message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -201,6 +219,16 @@ function GetInTouchDialog() {
                 className="p-3 bg-[#3b82f6]/10 border border-[#3b82f6]/30 rounded-sm text-center"
               >
                 <p className="font-mono text-xs text-[#3b82f6]">Message sent successfully!</p>
+              </motion.div>
+            )}
+
+            {submitError && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-3 bg-red-500/10 border border-red-500/30 rounded-sm text-center"
+              >
+                <p className="font-mono text-xs text-red-300">{submitError}</p>
               </motion.div>
             )}
           </motion.form>
