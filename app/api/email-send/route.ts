@@ -30,6 +30,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Send email to portfolio owner
     const response = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: toEmail,
@@ -40,6 +41,21 @@ export async function POST(req: Request) {
         <p><strong>Message:</strong> ${message}</p>
       `,
       replyTo: email,
+    });
+
+    // Send confirmation email to user
+    await resend.emails.send({
+      from: 'Portfolio <onboarding@resend.dev>',
+      to: email,
+      subject: 'We received your message!',
+      html: `
+        <p>Hi ${name},</p>
+        <p>Thank you for reaching out! I've received your message and appreciate you taking the time to connect.</p>
+        <p>I specialize in web development and full-stack development. I'm excited to explore how we can work together on your project.</p>
+        <p>I'll get back to you within 24 hours with my thoughts. In the meantime, feel free to reply to this email if you have any questions.</p>
+        <p>Looking forward to chatting!</p>
+        <p>Best regards,<br />Your Portfolio</p>
+      `,
     });
 
     return NextResponse.json({ success: true, data: response }, { status: 200 });
