@@ -1,8 +1,5 @@
-Prince Tan
-Full-Stack Developer
-
-Summary
-Full-stack developer focused on modern, user-centered web applications.
+Publish Soon Resume
+Prince Tan - Full-Stack Developer
 
 Skills
 - Next.js
@@ -18,4 +15,4 @@ LinkedIn: https://www.linkedin.com/in/pwtandev
 GitHub: https://github.com/lowish
 
 Email
-hello@example.com
+lowishxx@gmail.com
