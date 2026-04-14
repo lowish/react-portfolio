@@ -1,7 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react"
+import { gsap } from "gsap"
+import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin"
+import useIsomorphicLayoutEffect from "@/hooks/useIsomorphicLayoutEffect"
 
 const navLinks = [
   { label: "Works", href: "/#works" },
@@ -12,166 +14,296 @@ const navLinks = [
 ]
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuOpenRef = useRef<gsap.core.Timeline | null>(null)
+  const menuCloseRef = useRef<gsap.core.Timeline | null>(null)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+  useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollToPlugin)
+
+    gsap.set(".menu", {
+      autoAlpha: 0,
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+    })
+
+    gsap.set(".menu-backdrop", { opacity: 0 })
+
+    gsap.set(".menu-item", {
+      opacity: 0,
+      y: 120,
+      skewX: 12,
+    })
+
+    gsap.set(".menu-item-char", {
+      opacity: 0,
+      yPercent: 120,
+      skewX: 10,
+    })
+
+    menuOpenRef.current = gsap.timeline({ paused: true }).to(".menu", {
+      autoAlpha: 1,
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      ease: "power4.inOut",
+      duration: 0.75,
+    })
+      .to(
+        ".menu-backdrop",
+        {
+          opacity: 1,
+          duration: 0.65,
+          ease: "power2.out",
+        },
+        "<",
+      )
+      .to(
+        "body",
+        {
+          overflowY: "hidden",
+        },
+        "<",
+      )
+      .fromTo(
+        ".menu-item",
+        {
+          y: 120,
+          opacity: 0,
+          skewX: 12,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          skewX: 0,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.out",
+        },
+        "-=0.45",
+      )
+      .to(
+        ".menu-item-char",
+        {
+          yPercent: 0,
+          skewX: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: {
+            each: 0.012,
+            from: "start",
+          },
+        },
+        "-=0.68",
+      )
+
+    menuCloseRef.current = gsap.timeline({ paused: true }).to(".menu-item-char", {
+      yPercent: -120,
+      skewX: -8,
+      opacity: 0,
+      duration: 0.35,
+      ease: "power2.in",
+      stagger: {
+        each: 0.006,
+        from: "end",
+      },
+    })
+      .to(
+        ".menu-item",
+        {
+          skewX: -10,
+          opacity: 0,
+          y: -120,
+          duration: 0.5,
+          stagger: 0.06,
+          ease: "power2.in",
+        },
+        "<0.05",
+      )
+      .to(
+        ".menu-backdrop",
+        {
+          opacity: 0,
+          duration: 0.45,
+          ease: "power2.inOut",
+        },
+        "<",
+      )
+      .to(
+        "body",
+        {
+          overflowY: "auto",
+        },
+        "<0.1",
+      )
+      .to(
+        ".menu",
+        {
+          autoAlpha: 0,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+          ease: "power4.inOut",
+          duration: 0.65,
+        },
+        "-=0.2",
+      )
+
+    return () => {
+      menuOpenRef.current?.kill()
+      menuCloseRef.current?.kill()
+      gsap.set("body", { clearProps: "overflowY" })
     }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const scrollToSection = (href: string) => {
-    setIsMenuOpen(false)
+  const scrollToSection = (href: string, offsetY = 96) => {
     const targetId = href.split("#")[1]
-    const element = targetId ? document.getElementById(targetId) : null
-    if (element) {
-      const headerOffset = 96
-      const targetPosition = element.getBoundingClientRect().top + window.scrollY - headerOffset
-      window.scrollTo({ top: targetPosition, behavior: "smooth" })
-      window.history.pushState(null, "", href)
-    }
+    if (!targetId) return
+
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: { y: `#${targetId}`, offsetY },
+      ease: "power2.out",
+    })
+    window.history.pushState(null, "", href)
+  }
+
+  const openMenu = () => {
+    menuCloseRef.current?.pause(0)
+    menuOpenRef.current?.play(0)
+  }
+
+  const closeMenu = () => {
+    menuOpenRef.current?.pause(0)
+    menuCloseRef.current?.play(0)
+  }
+
+  const handleMenu = () => {
+    setIsMenuOpen((prev) => {
+      const next = !prev
+      if (next) {
+        openMenu()
+      } else {
+        closeMenu()
+      }
+      return next
+    })
+  }
+
+  const handleMenuItemClick = (href: string) => {
+    closeMenu()
+    setIsMenuOpen(false)
+    scrollToSection(href)
+  }
+
+  const handleMenuClose = () => {
+    closeMenu()
+    setIsMenuOpen(false)
   }
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? "bg-background/80 backdrop-blur-md border-b border-border" : ""
-        }`}
-      >
-        <nav className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-4 py-4 sm:px-6 md:px-12 md:py-5">
-          {/* Logo */}
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault()
-              window.scrollTo({ top: 0, behavior: "smooth" })
-            }}
-            className="group flex items-center gap-2"
-          >
-            <span className="font-mono text-xs tracking-widest text-muted-foreground">lowish</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] group-hover:scale-150 transition-transform duration-300" />
-          </a>
+      <nav className="fixed left-0 right-0 top-0 z-50 mx-auto mt-6 flex w-[90%] max-w-screen-xl items-center justify-between text-white mix-blend-difference md:mt-8">
+        <button
+          type="button"
+          className="nav-item group flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-muted-foreground backdrop-blur-sm transition-colors duration-300 hover:border-[#3b82f6] sm:text-s"
+          onClick={() => {
+            closeMenu()
+            setIsMenuOpen(false)
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: { y: 0, offsetY: 0 },
+              ease: "power2.out",
+            })
+          }}
+        >
+            lowish
+          <span className="h-1.5 w-1.5 rounded-full bg-[#3b82f6] transition-transform duration-300 group-hover:scale-150" />
+        </button>
 
-          {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    scrollToSection(link.href)
-                  }}
-                  className="group relative font-mono text-xs tracking-wider text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  <span className="mr-1 font-mono text-[#3b82f6]">0{index + 1}</span>
-                  {link.label.toUpperCase()}
-                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground group-hover:w-full transition-all duration-300" />
-                </a>
-              </li>
-            ))}
-          </ul>
+        <button
+          type="button"
+          className="nav-item menu-burger group flex w-8 cursor-pointer flex-col items-center justify-center space-y-1 py-3 [&>span]:block [&>span]:h-[1.5px] [&>span]:w-full [&>span]:transform [&>span]:bg-white [&>span]:transition [&>span]:duration-300"
+          onClick={handleMenu}
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-nav-menu"
+        >
+          <span
+            className={`${
+              isMenuOpen
+                ? "translate-y-[3px] rotate-45 opacity-100 group-hover:opacity-50"
+                : "opacity-100 group-hover:opacity-50"
+            }`}
+          />
+          <span
+            className={`${
+              isMenuOpen
+                ? "-translate-y-[3px] -rotate-45 opacity-100 group-hover:opacity-50"
+                : "opacity-100 group-hover:opacity-50"
+            }`}
+          />
+        </button>
+      </nav>
 
-          {/* Status Indicator */}
-          <div className="hidden md:flex items-center gap-3">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3b82f6] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3b82f6]" />
-            </span>
-            <a
-              href="/resume.txt"
-              download
-              className="font-mono text-xs tracking-wider text-muted-foreground transition-colors duration-300 hover:text-foreground"
-            >
-              RESUME
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="relative flex h-10 w-10 shrink-0 items-center justify-center md:hidden"
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav-menu"
-          >
-            <span className="relative block h-5 w-6">
-              <motion.span
-                animate={isMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                className="absolute left-0 top-0 h-px w-6 origin-center bg-foreground"
-              />
-              <motion.span
-                animate={isMenuOpen ? { opacity: 0, x: -8 } : { opacity: 1, x: 0 }}
-                className="absolute left-0 top-2 h-px w-6 bg-foreground"
-              />
-              <motion.span
-                animate={isMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                className="absolute left-0 top-4 h-px w-6 origin-center bg-foreground"
-              />
-            </span>
-          </button>
-        </nav>
-      </motion.header>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            id="mobile-nav-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-lg md:hidden"
-          >
-            <nav className="flex h-full flex-col items-center justify-center gap-7 px-4 pt-20 pb-8">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={(event) => {
-                    event.preventDefault()
-                    scrollToSection(link.href)
-                  }}
-                  className="group inline-flex items-center gap-3 text-[clamp(2rem,10vw,3.25rem)] font-sans tracking-tight text-foreground"
-                >
-                  <span className="font-mono text-lg text-[#3b82f6] flex-shrink-0">0{index + 1}</span>
-                  <span className="text-center">{link.label}</span>
-                </motion.a>
-              ))}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="flex items-center gap-3 mt-8"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3b82f6] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#3b82f6]" />
-                </span>
-                <a
-                  href="/resume.txt"
-                  download
-                  className="font-mono text-xs tracking-wider text-muted-foreground transition-colors duration-300 hover:text-foreground"
-                >
-                  RESUME
-                </a>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Menu isOpen={isMenuOpen} onSelect={handleMenuItemClick} onClose={handleMenuClose} />
     </>
+  )
+}
+
+function Menu({
+  isOpen,
+  onSelect,
+  onClose,
+}: {
+  isOpen: boolean
+  onSelect: (href: string) => void
+  onClose: () => void
+}) {
+  const renderSplitText = (text: string) => {
+    return text.split("").map((char, idx) => (
+      <span
+        key={`${text}-${idx}-${char}`}
+        className="menu-item-char inline-block will-change-transform"
+        style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+      >
+        {char}
+      </span>
+    ))
+  }
+
+  return (
+    <div
+      id="mobile-nav-menu"
+      className={`menu invisible fixed left-0 top-0 z-40 grid h-screen w-screen place-items-center justify-center bg-white text-[#050505] opacity-0 backdrop-blur-lg [clip-path:polygon(0%_0%,_100%_0%,_100%_0%,_0%_0%)] ${
+        isOpen ? "pointer-events-auto" : "pointer-events-none"
+      }`}
+    >
+      <div className="menu-backdrop absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(59,130,246,0.12),transparent_45%),radial-gradient(circle_at_82%_78%,rgba(0,0,0,0.08),transparent_44%)]" />
+      <div className="flex w-full max-w-[760px] flex-col items-start gap-5 px-6 sm:px-10">
+        {navLinks.map((link, index) => (
+          <button
+            type="button"
+            key={link.label}
+            className="menu-item inline-flex w-full items-center gap-4 font-sans text-[clamp(2rem,10vw,3.25rem)] tracking-tight opacity-0"
+            onClick={() => onSelect(link.href)}
+          >
+            <span className="w-12 text-right font-mono text-lg text-[#3b82f6]">0{index + 1}</span>
+            <span className="relative flex">{renderSplitText(link.label)}</span>
+          </button>
+        ))}
+
+        <div className="mt-8 flex items-center gap-3 pl-16">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3b82f6] opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3b82f6]" />
+          </span>
+          <a
+            href="/resume.txt"
+            download
+            className="inline-flex items-center rounded-full border border-black/10 px-5 py-2.5 font-mono text-xs tracking-wider text-[#050505] transition-colors duration-300 hover:border-[#3b82f6] hover:text-[#3b82f6]"
+            onClick={onClose}
+          >
+            RESUME
+          </a>
+        </div>
+      </div>
+    </div>
   )
 }
