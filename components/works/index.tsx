@@ -1,4 +1,5 @@
 "use client"
+import { ArrowUpRight } from "lucide-react"
 
 const projects = [
   {
@@ -55,16 +56,16 @@ export function Works() {
                 <div className="border-b border-r-0 border-white/10 p-4 md:p-6 lg:border-b-0 lg:border-r">
                   <div className="flex h-full flex-col justify-center px-1 py-2 text-left md:px-2">
                     <h3 className="mb-3 font-mono text-[1.35rem] text-white sm:text-[1.5rem]">{project.title}</h3>
-                    <p className="mb-4 text-sm leading-relaxed text-white/80 md:text-base font-mono">{project.description}</p>
+                    <p className="mb-15 text-sm leading-relaxed text-white/80 md:text-base font-mono">{project.description}</p>
 
                     <a
                       href={project.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="mt-4 inline-flex w-fit items-center gap-2 self-start whitespace-nowrap rounded-full border border-white bg-white px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-black transition-colors hover:bg-transparent hover:text-white"
+                      className="hover-effect relative flex w-full items-center justify-between gap-2 border-b border-border px-1 pb-3 font-mono text-xs tracking-[0.18em] text-white transition-colors duration-300 hover:text-[#3b82f6] sm:px-3 sm:text-sm"
                     >
-                      VIEW PROJECT
-                      <span aria-hidden="true">-&gt;</span>
+                      View Project
+                      <ArrowUpRight className="stroke-1" />
                     </a>
                   </div>
                 </div>
