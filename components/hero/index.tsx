@@ -1,8 +1,9 @@
 "use client"
 
 import { useRef } from "react"
+import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { FileText } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { SentientSphere } from "@/components/background/sentient-sphere"
 import { useGetInTouch } from "@/components/get-in-touch"
 
@@ -37,7 +38,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="w-fit max-w-[92vw] rounded-xl px-2 py-2 backdrop-blur-[1px] sm:max-w-[80vw] sm:px-3"
+          className="w-full max-w-[92vw] rounded-xl px-2 py-2 backdrop-blur-[1px] sm:max-w-[80vw] sm:px-3"
         >
           <p className="mb-2 font-mono text-[10px] tracking-[0.22em] text-white/85 sm:text-xs sm:tracking-[0.28em]">00 — BUILDING SOLUTIONS</p>
           <h2 className="font-sans text-[clamp(2.3rem,11vw,5.2rem)] font-light leading-[0.92] tracking-tight text-balance text-white [text-shadow:0_6px_26px_rgba(0,0,0,0.9)]">
@@ -45,6 +46,18 @@ export function Hero() {
             <br />
             <span className="italic">TAN</span>
           </h2>
+
+          <div className="mt-50 max-w-[230px] sm:mt-60 sm:max-w-[260px]">
+            <Link
+              href="/resume"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover-effect relative flex w-full items-center justify-between gap-2 border-b border-border px-1 pb-3 font-mono text-xs tracking-[0.18em] text-foreground transition-colors duration-300 hover:text-[#3b82f6] sm:px-2 sm:text-sm"
+            >
+              <p>View Resume</p>
+              <ArrowUpRight className="stroke-1" />
+            </Link>
+          </div>
         </motion.div>
 
         {/* Center Button */}
