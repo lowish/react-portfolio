@@ -30,14 +30,14 @@ export function Navbar() {
 
     gsap.set(".menu-item", {
       opacity: 0,
-      y: 120,
-      skewX: 12,
+      y: -120,
+      skewX: -12,
     })
 
     gsap.set(".menu-item-char", {
       opacity: 0,
-      yPercent: 120,
-      skewX: 10,
+      yPercent: -120,
+      skewX: -10,
     })
 
     menuOpenRef.current = gsap.timeline({ paused: true }).to(".menu", {
@@ -65,9 +65,9 @@ export function Navbar() {
       .fromTo(
         ".menu-item",
         {
-          y: 120,
+          y: -120,
           opacity: 0,
-          skewX: 12,
+          skewX: -12,
         },
         {
           y: 0,
@@ -97,33 +97,33 @@ export function Navbar() {
 
     menuCloseRef.current = gsap.timeline({ paused: true }).to(".menu-item-char", {
       yPercent: -120,
-      skewX: -8,
+      skewX: -10,
       opacity: 0,
-      duration: 0.35,
-      ease: "power2.in",
+      duration: 0.7,
+      ease: "power3.in",
       stagger: {
-        each: 0.006,
+        each: 0.012,
         from: "end",
       },
     })
       .to(
         ".menu-item",
         {
-          skewX: -10,
+          skewX: -12,
           opacity: 0,
           y: -120,
-          duration: 0.5,
-          stagger: 0.06,
-          ease: "power2.in",
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.in",
         },
-        "<0.05",
+        "<",
       )
       .to(
         ".menu-backdrop",
         {
           opacity: 0,
-          duration: 0.45,
-          ease: "power2.inOut",
+          duration: 0.65,
+          ease: "power2.in",
         },
         "<",
       )
@@ -140,9 +140,9 @@ export function Navbar() {
           autoAlpha: 0,
           clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
           ease: "power4.inOut",
-          duration: 0.65,
+          duration: 0.75,
         },
-        "-=0.2",
+        "-=0.45",
       )
 
     return () => {
@@ -165,36 +165,47 @@ export function Navbar() {
   }
 
   const openMenu = () => {
-    menuCloseRef.current?.pause(0)
-    menuOpenRef.current?.play(0)
+    menuCloseRef.current?.pause()
+    menuOpenRef.current?.restart()
+    setIsMenuOpen(true)
   }
 
-  const closeMenu = () => {
-    menuOpenRef.current?.pause(0)
-    menuCloseRef.current?.play(0)
+  const closeMenu = (afterClose?: () => void) => {
+    menuOpenRef.current?.pause()
+
+    const closeTimeline = menuCloseRef.current
+    if (!closeTimeline) {
+      setIsMenuOpen(false)
+      afterClose?.()
+      return
+    }
+
+    closeTimeline.eventCallback("onComplete", () => {
+      setIsMenuOpen(false)
+      closeTimeline.eventCallback("onComplete", null)
+      afterClose?.()
+    })
+
+    closeTimeline.restart()
   }
 
   const handleMenu = () => {
-    setIsMenuOpen((prev) => {
-      const next = !prev
-      if (next) {
-        openMenu()
-      } else {
-        closeMenu()
-      }
-      return next
-    })
+    if (isMenuOpen) {
+      closeMenu()
+      return
+    }
+
+    openMenu()
   }
 
   const handleMenuItemClick = (href: string) => {
-    closeMenu()
-    setIsMenuOpen(false)
-    scrollToSection(href)
+    closeMenu(() => {
+      scrollToSection(href)
+    })
   }
 
   const handleMenuClose = () => {
     closeMenu()
-    setIsMenuOpen(false)
   }
 
   return (
@@ -204,12 +215,12 @@ export function Navbar() {
           type="button"
           className="nav-item group flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-muted-foreground backdrop-blur-sm transition-colors duration-300 hover:border-[#3b82f6] sm:text-s"
           onClick={() => {
-            closeMenu()
-            setIsMenuOpen(false)
-            gsap.to(window, {
-              duration: 1,
-              scrollTo: { y: 0, offsetY: 0 },
-              ease: "power2.out",
+            closeMenu(() => {
+              gsap.to(window, {
+                duration: 1,
+                scrollTo: { y: 0, offsetY: 0 },
+                ease: "power2.out",
+              })
             })
           }}
         >
