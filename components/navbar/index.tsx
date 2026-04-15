@@ -210,23 +210,11 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed left-0 right-0 top-0 z-50 mx-auto mt-6 flex w-[90%] max-w-screen-xl items-center justify-between text-white mix-blend-difference md:mt-8">
-        <button
-          type="button"
-          className="nav-item group flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-muted-foreground backdrop-blur-sm transition-colors duration-300 hover:border-[#3b82f6] sm:text-s"
-          onClick={() => {
-            closeMenu(() => {
-              gsap.to(window, {
-                duration: 1,
-                scrollTo: { y: 0, offsetY: 0 },
-                ease: "power2.out",
-              })
-            })
-          }}
-        >
-            lowish
+      <nav className="fixed left-0 right-0 top-0 z-50 mx-auto mt-6 flex w-[90%] max-w-screen-xl items-center justify-between mix-blend-difference md:mt-8">
+        <div className="nav-item group flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-muted-foreground backdrop-blur-sm">
+          lowish
           <span className="h-1.5 w-1.5 rounded-full bg-[#3b82f6] transition-transform duration-300 group-hover:scale-150" />
-        </button>
+        </div>
 
         <button
           type="button"
@@ -300,18 +288,15 @@ function Menu({
           </button>
         ))}
 
-        <div className="mt-8 flex items-center gap-3 pl-16">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3b82f6] opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3b82f6]" />
-          </span>
+        <div className="group mt-8 flex items-center gap-3 pl-16">
+          <span className="inline-flex h-2 w-2 rounded-full bg-[#3b82f6] transition-transform duration-300 group-hover:scale-150" />
           <a
             href="/resume.txt"
             download
-            className="inline-flex items-center rounded-full border border-black/10 px-5 py-2.5 font-mono text-xs tracking-wider text-[#050505] transition-colors duration-300 hover:border-[#3b82f6] hover:text-[#3b82f6]"
+            className="inline-flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-[#4b5563] backdrop-blur-sm transition-colors duration-300 hover:text-[#3b82f6] sm:text-s"
             onClick={onClose}
           >
-            RESUME
+            Resume
           </a>
         </div>
       </div>
