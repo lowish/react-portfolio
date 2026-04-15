@@ -6,6 +6,7 @@ import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
 import { Works } from "@/components/works"
 import { Experience } from "@/components/experience"
+import { InfiniteCarousel } from "@/components/infinite-carousel"
 import { TechMarquee } from "@/components/tech-marquee"
 import { Contact } from "@/components/contact"
 import { SmoothScroll } from "@/components/smooth-scroll"
@@ -51,6 +52,7 @@ export default function Home() {
           <SectionBlend />
           <Works />
           <Experience />
+          <InfiniteCarousel />
           <About />
           <TechMarquee />
           <Contact />
