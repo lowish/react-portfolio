@@ -5,13 +5,23 @@ import { gsap } from "gsap"
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin"
 import useIsomorphicLayoutEffect from "@/hooks/useIsomorphicLayoutEffect"
 
-const navLinks = [
-  { label: "Works", href: "/#works" },
-  { label: "Exp", href: "/#experience" },
-  { label: "Certificate", href: "/#certificates" },
-  { label: "About", href: "/#about" },
-  { label: "Stack", href: "/#stack" },
-  { label: "Contact", href: "/#contact" },
+const menuColumns = [
+  {
+    title: "QUICK",
+    items: [
+      { number: "01", label: "Works", href: "/#works" },
+      { number: "02", label: "Exp", href: "/#experience" },
+      { number: "03", label: "Certificate", href: "/#certificates" },
+    ],
+  },
+  {
+    title: "LINKS",
+    items: [
+      { number: "04", label: "Stack", href: "/#stack" },
+      { number: "05", label: "Contact", href: "/#contact" },
+      { number: "06", label: "About", href: "/#about" },
+    ],
+  },
 ]
 
 export function Navbar() {
@@ -276,30 +286,26 @@ function Menu({
       }`}
     >
       <div className="menu-backdrop absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,rgba(59,130,246,0.12),transparent_45%),radial-gradient(circle_at_82%_78%,rgba(0,0,0,0.08),transparent_44%)]" />
-      <div className="flex w-full max-w-[760px] flex-col items-start gap-5 px-6 sm:px-10">
-        {navLinks.map((link, index) => (
-          <button
-            type="button"
-            key={link.label}
-            className="menu-item inline-flex w-full items-center gap-4 font-sans text-[clamp(1.5rem,6vw,2.5rem)] tracking-tight opacity-0"
-            onClick={() => onSelect(link.href)}
-          >
-            <span className="w-12 text-right font-mono text-lg text-[#3b82f6]">0{index + 1}</span>
-            <span className="relative flex">{renderSplitText(link.label)}</span>
-          </button>
-        ))}
+      <div className="grid w-full max-w-[980px] grid-cols-1 gap-y-8 px-6 sm:px-10 md:grid-cols-2 md:gap-x-14 md:gap-y-8">
+        {menuColumns.map((column) => (
+          <div key={column.title} className="flex flex-col items-start">
+            <p className="mb-4 pl-10 font-mono text-xs tracking-[0.22em] text-[#6b7280] md:pl-16">{column.title}</p>
 
-        <div className="group mt-8 flex items-center gap-3 pl-16">
-          <span className="inline-flex h-2 w-2 rounded-full bg-[#3b82f6] transition-transform duration-300 group-hover:scale-150" />
-          <a
-            href="/resume.txt"
-            download
-            className="inline-flex items-center gap-2 px-3 py-1.5 font-mono text-base tracking-widest text-[#4b5563] backdrop-blur-sm transition-colors duration-300 hover:text-[#3b82f6] sm:text-s"
-            onClick={onClose}
-          >
-            Resume
-          </a>
-        </div>
+            <div className="flex w-full flex-col gap-3">
+              {column.items.map((link) => (
+                <button
+                  type="button"
+                  key={link.number}
+                  className="menu-item inline-flex w-full items-center gap-3 font-sans text-[clamp(1.65rem,8vw,2.2rem)] tracking-tight opacity-0 md:gap-4 md:text-[clamp(1rem,4.8vw,2rem)]"
+                  onClick={() => onSelect(link.href)}
+                >
+                  <span className="w-10 text-right font-mono text-base text-[#3b82f6] md:w-12 md:text-lg">{link.number}</span>
+                  <span className="relative flex">{renderSplitText(link.label)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
