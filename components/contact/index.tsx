@@ -48,7 +48,7 @@ export function Contact() {
               }
               transition={isHovered ? { duration: 0.3 } : { duration: 2.2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
             >
-              Let's <span className="italic">Collaborate</span>
+              Let's <span className="italic">Talk</span>
             </motion.h2>
 
             <motion.div
