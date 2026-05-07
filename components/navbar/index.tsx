@@ -8,6 +8,7 @@ import useIsomorphicLayoutEffect from "@/hooks/useIsomorphicLayoutEffect"
 const navLinks = [
   { label: "Works", href: "/#works" },
   { label: "Exp", href: "/#experience" },
+  { label: "Certificate", href: "/#certificates" },
   { label: "About", href: "/#about" },
   { label: "Stack", href: "/#stack" },
   { label: "Contact", href: "/#contact" },
@@ -280,7 +281,7 @@ function Menu({
           <button
             type="button"
             key={link.label}
-            className="menu-item inline-flex w-full items-center gap-4 font-sans text-[clamp(2rem,10vw,3.25rem)] tracking-tight opacity-0"
+            className="menu-item inline-flex w-full items-center gap-4 font-sans text-[clamp(1.5rem,6vw,2.5rem)] tracking-tight opacity-0"
             onClick={() => onSelect(link.href)}
           >
             <span className="w-12 text-right font-mono text-lg text-[#3b82f6]">0{index + 1}</span>
