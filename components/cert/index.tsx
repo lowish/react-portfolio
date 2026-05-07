@@ -159,7 +159,6 @@ export function Certificates() {
           className="mb-10 md:mb-14"
         >
           <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">03 - CERT</p>
-          <h2 className="text-2xl font-light italic tracking-[-0.03em] text-white md:text-4xl">Certificates</h2>
         </motion.div>
 
         <motion.div
