@@ -8,7 +8,7 @@ export function About() {
     <section id="about" className="relative overflow-hidden px-4 py-20 sm:px-6 md:px-12 md:py-28">
       <div className="mx-auto max-w-[1000px]">
         <div className="mb-8 md:mb-10">
-          <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">03 - ABOUT</p>
+          <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">04 - ABOUT</p>
           <h2 className="font-sans text-2xl font-light italic sm:text-3xl md:text-5xl">What I Do</h2>
         </div>
 

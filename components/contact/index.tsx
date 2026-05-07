@@ -27,7 +27,7 @@ export function Contact() {
 
         {/* Content */}
         <div className="relative border-t border-white/10 px-4 py-14 sm:px-6 sm:py-16 md:px-12 md:py-24">
-          <p className="mb-6 font-mono text-xs tracking-[0.3em] text-muted-foreground">05 - CONTACT</p>
+          <p className="mb-6 font-mono text-xs tracking-[0.3em] text-muted-foreground">06 - CONTACT</p>
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <motion.h2
               className="text-center font-sans text-3xl font-light tracking-tight sm:text-4xl md:text-left md:text-6xl lg:text-8xl"
