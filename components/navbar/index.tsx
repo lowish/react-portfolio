@@ -17,9 +17,9 @@ const menuColumns = [
   {
     title: "LINKS",
     items: [
-      { number: "04", label: "Stack", href: "/#stack" },
-      { number: "05", label: "Contact", href: "/#contact" },
-      { number: "06", label: "About", href: "/#about" },
+      { number: "04", label: "About", href: "/#about" },
+      { number: "05", label: "Stack", href: "/#stack" },
+      { number: "06", label: "Contact", href: "/#contact" },
     ],
   },
 ]
