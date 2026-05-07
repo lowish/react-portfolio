@@ -92,7 +92,7 @@ function CertificateRow({ item, active, onHover, onLeave }: CertificateRowProps)
   const rowContent = (
     <motion.div className="group flex items-center gap-4 px-0 py-5 md:py-6">
       <div className="w-16 shrink-0 md:w-20">
-        <span className="font-mono text-[11px] tracking-[0.18em] text-white/45 transition-colors group-hover:text-white/75">
+        <span className="font-mono text-[11px] tracking-[0.18em] text-white/45 transition-colors group-hover:text-blue-600">
           {item.year}
         </span>
       </div>
