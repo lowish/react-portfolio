@@ -6,6 +6,7 @@ import { Hero } from "@/components/hero"
 import { About } from "@/components/about"
 import { Works } from "@/components/works"
 import { Experience } from "@/components/experience"
+import { Certificates } from "@/components/cert"
 import { InfiniteCarousel } from "@/components/infinite-carousel"
 import { TechMarquee } from "@/components/tech-marquee"
 import { Contact } from "@/components/contact"
@@ -52,6 +53,7 @@ export default function Home() {
           <SectionBlend />
           <Works />
           <Experience />
+          <Certificates />
           <InfiniteCarousel />
           <About />
           <TechMarquee />
