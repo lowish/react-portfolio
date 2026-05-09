@@ -1,8 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, ReactNode } from "react"
-import { motion } from "framer-motion"
-import { Send, X } from "lucide-react"
+import { X } from "lucide-react"
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog"
 
 interface GetInTouchContextType {
@@ -62,10 +61,10 @@ function GetInTouchDialog() {
       setIsSubmitted(true)
       setFormData({ name: "", email: "", message: "" })
 
+      // Keep the dialog open after submit; briefly show the "Sent!" state
       setTimeout(() => {
         setIsSubmitted(false)
-        setOpen(false)
-      }, 2000)
+      }, 3000)
     } catch (error) {
       const message = error instanceof Error ? error.message : "Something went wrong"
       setSubmitError(message)
@@ -92,31 +91,17 @@ function GetInTouchDialog() {
         {/* Content */}
         <div className="px-6 py-8 overflow-y-auto max-h-[80vh]">
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-8"
-          >
+          <div className="mb-8">
             <DialogTitle className="font-sans text-2xl md:text-3xl font-light tracking-tight text-white mb-2">
               Get in Touch
             </DialogTitle>
             <div className="w-12 h-1 bg-[#3b82f6]" />
-          </motion.div>
+          </div>
 
           {/* Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-5"
-          >
+          <form onSubmit={handleSubmit} className="space-y-5">
             {/* Name Input */}
-            <motion.div
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div>
               <label htmlFor="name" className="block text-xs font-mono tracking-widest text-muted-foreground mb-2">
                 NAME
               </label>
@@ -130,13 +115,10 @@ function GetInTouchDialog() {
                 data-cursor-hover
                 className="w-full px-4 py-2 bg-transparent border border-white/20 rounded-none focus:border-[#3b82f6] outline-none transition-colors duration-300 font-mono text-sm text-white placeholder-white/40"
               />
-            </motion.div>
+            </div>
 
             {/* Email Input */}
-            <motion.div
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div>
               <label htmlFor="email" className="block text-xs font-mono tracking-widest text-muted-foreground mb-2">
                 EMAIL
               </label>
@@ -150,13 +132,10 @@ function GetInTouchDialog() {
                 data-cursor-hover
                 className="w-full px-4 py-2 bg-transparent border border-white/20 rounded-none focus:border-[#3b82f6] outline-none transition-colors duration-300 font-mono text-sm text-white placeholder-white/40"
               />
-            </motion.div>
+            </div>
 
             {/* Message Input */}
-            <motion.div
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div>
               <label htmlFor="message" className="block text-xs font-mono tracking-widest text-muted-foreground mb-2">
                 MESSAGE
               </label>
@@ -171,67 +150,28 @@ function GetInTouchDialog() {
                 className="w-full px-4 py-2 bg-transparent border border-white/20 rounded-none focus:border-[#3b82f6] outline-none transition-colors duration-300 font-mono text-sm text-white placeholder-white/40 resize-none"
                 placeholder="Your message..."
               />
-            </motion.div>
+            </div>
 
             {/* Submit Button */}
-            <motion.div
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div>
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
                 data-cursor-hover
                 className="w-full relative overflow-hidden group"
               >
-                <motion.div
-                  className="absolute inset-0 bg-[#3b82f6]"
-                  initial={{ y: "100%" }}
-                  whileHover={{ y: "0%" }}
-                  transition={{ duration: 0.3 }}
-                />
+                <div className="absolute inset-0" />
                 <div className="relative px-6 py-3 flex items-center justify-center gap-2">
                   <span className="font-mono text-sm font-medium group-hover:text-black transition-colors duration-300 tracking-widest">
                     {isSubmitted ? "SENT!" : isSubmitting ? "SENDING..." : "Send Message"}
                   </span>
-                  <motion.div
-                    animate={{
-                      rotate: isSubmitting ? 360 : 0,
-                    }}
-                    transition={{
-                      duration: isSubmitting ? 1 : 0.3,
-                      repeat: isSubmitting ? Number.POSITIVE_INFINITY : 0,
-                    }}
-                  >
-                    <Send className="w-4 h-4 group-hover:text-black transition-colors duration-300" />
-                  </motion.div>
                 </div>
                 <div className="absolute inset-0 border border-[#3b82f6] group-hover:border-transparent transition-colors duration-300" />
               </button>
-            </motion.div>
+            </div>
 
-            {/* Success Message */}
-            {isSubmitted && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="p-3 bg-[#3b82f6]/10 border border-[#3b82f6]/30 rounded-sm text-center"
-              >
-                <p className="font-mono text-xs text-[#3b82f6]">Message sent successfully!</p>
-              </motion.div>
-            )}
-
-            {submitError && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="p-3 bg-red-500/10 border border-red-500/30 rounded-sm text-center"
-              >
-                <p className="font-mono text-xs text-red-300">{submitError}</p>
-              </motion.div>
-            )}
-          </motion.form>
+            
+          </form>
         </div>
       </DialogContent>
     </Dialog>
