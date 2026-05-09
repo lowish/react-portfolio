@@ -13,9 +13,10 @@ type CertificateItem = {
 
 const certificates: CertificateItem[] = [
   {
-    title: "Web Design Competition",
+    title: "TechTalk",
     year: "2025",
-    image: "/Web%20Design.jpg",
+    image: "TechTalk.png",
+    href: "https://pdfhost.io/v/JwvZfL98bp_TAN__PRINCE_WILLIAM_M__Certificate_of_Participation_TechTalk"
   },
   {
     title: "AI Conference",
