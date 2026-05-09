@@ -49,7 +49,7 @@ export function Works() {
                   <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
                   <span className="h-3 w-3 rounded-full bg-[#28c840]" />
                 </div>
-                <div className="hidden h-7 w-16 rounded-full border border-white/10 bg-white/5 md:block" />
+                <div/>
               </div>
 
               <div className="grid gap-0 lg:grid-cols-[1fr_1.15fr]">
