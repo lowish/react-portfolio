@@ -1,11 +1,23 @@
 "use client"
 
 import { useState } from "react"
+import { gsap } from "gsap"
 import { motion } from "framer-motion"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight, ArrowUpIcon } from "lucide-react"
+import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin"
+
+gsap.registerPlugin(ScrollToPlugin)
 
 export function Contact() {
   const [isHovered, setIsHovered] = useState(false)
+
+  const scrollToTop = () => {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: { y: 0 },
+      ease: "power2.out",
+    })
+  }
 
   return (
     <footer id="contact" className="relative">
@@ -66,7 +78,7 @@ export function Contact() {
 
       {/* Footer Info */}
       <div className="border-t border-white/10 px-4 py-8 sm:px-6 md:px-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           {/* Location */}
           <div className="font-mono text-xs tracking-widest text-muted-foreground">
             <span className="mr-2">LOCATION |</span>
@@ -74,7 +86,7 @@ export function Contact() {
           </div>
 
           {/* Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 md:justify-start md:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             {[
               { name: "LinkedIn", url: "https://www.linkedin.com/in/pwtandev" },
               { name: "GitHub", url: "https://github.com/lowish" },
@@ -93,8 +105,20 @@ export function Contact() {
             ))}
           </div>
 
-          {/* Copyright */}
-          <p className="font-mono text-xs tracking-widest text-muted-foreground">© {new Date().getFullYear()} lowish</p>
+          <div className="flex items-center gap-4 md:justify-end md:gap-6">
+            
+            {/* Copyright */}
+            <p className="font-mono text-xs tracking-widest text-white/70">© {new Date().getFullYear()} lowish</p>
+            <button
+              type="button"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+              data-cursor-hover
+              className="flex h-10 w-10 items-center justify-center rounded-full"
+            >
+              <ArrowUpIcon className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>
