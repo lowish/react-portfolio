@@ -86,9 +86,6 @@ export function Works() {
           )
         })}
       </div>
-
-      {/* Bottom Border */}
-      <div className="mx-auto mt-8 max-w-[1400px] border-t border-white/10" />
     </section>
   )
 }
