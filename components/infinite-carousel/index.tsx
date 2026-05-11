@@ -1,10 +1,10 @@
 "use client"
 
 import {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
-  useState,
   type PointerEvent as ReactPointerEvent,
   type WheelEvent as ReactWheelEvent,
 } from "react"
@@ -46,6 +46,8 @@ function CarouselCard({ item }: { item: CarouselItem }) {
           sizes="(max-width: 640px) 220px, 250px"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           priority={false}
+          loading="lazy"
+          quality={85}
         />
       </div>
     </article>
@@ -57,11 +59,12 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
   const trackRef = useRef<HTMLDivElement | null>(null)
   const cycleWidthRef = useRef(0)
   const offsetRef = useRef(0)
-  const lastFrameRef = useRef<number | null>(null)
+  const lastFrameRef = useRef(0)
   const rafRef = useRef<number | null>(null)
 
-  const [isHovered, setIsHovered] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
+  // Use refs instead of state for animation control to avoid re-renders
+  const isHoveredRef = useRef(false)
+  const isDraggingRef = useRef(false)
   const releaseManualTimerRef = useRef<number | null>(null)
 
   const dragStartXRef = useRef(0)
@@ -69,39 +72,31 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
 
   const duplicatedItems = useMemo(() => [...items, ...items], [items])
 
-  const normalizeOffset = (value: number) => {
-    const cycle = cycleWidthRef.current
-    if (cycle <= 0) {
-      return 0
-    }
-
-    if (value >= cycle) {
-      return value % cycle
-    }
-
-    if (value < 0) {
-      return ((value % cycle) + cycle) % cycle
-    }
-
-    return value
-  }
-
-  const applyTransform = (rawOffset: number) => {
+  // Optimized: Apply transform directly, let normalizeOffset happen lazily
+  const applyTransform = useCallback((rawOffset: number) => {
     const track = trackRef.current
-    if (!track) {
-      return
+    if (!track) return
+
+    const cycle = cycleWidthRef.current
+    if (cycle <= 0) return
+
+    // Only apply modulo when offset exceeds cycle (lazy normalization)
+    let offset = rawOffset
+    if (offset >= cycle) {
+      offset = offset - Math.floor(offset / cycle) * cycle
+    } else if (offset < 0) {
+      offset = offset - Math.floor(offset / cycle) * cycle
     }
 
-    const offset = normalizeOffset(rawOffset)
     offsetRef.current = offset
-    track.style.transform = `translate3d(${-offset}px, 0, 0)`
-  }
+    // Use integer values to reduce subpixel rendering overhead
+    const pixelOffset = Math.round(offset * 100) / 100
+    track.style.transform = `translate3d(${-pixelOffset}px, 0, 0)`
+  }, [])
 
   useEffect(() => {
     const track = trackRef.current
-    if (!track) {
-      return
-    }
+    if (!track) return
 
     const updateCycleWidth = () => {
       cycleWidthRef.current = track.scrollWidth / 2
@@ -113,18 +108,23 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
     const observer = new ResizeObserver(updateCycleWidth)
     observer.observe(track)
 
+    // High-performance animation loop
     const tick = (time: number) => {
-      if (lastFrameRef.current === null) {
+      if (lastFrameRef.current === 0) {
         lastFrameRef.current = time
+        rafRef.current = window.requestAnimationFrame(tick)
+        return
       }
 
       const delta = time - lastFrameRef.current
       lastFrameRef.current = time
 
-      if (!isHovered && !isDragging) {
+      // Only update if not hovered and not dragging (checked via refs, not state)
+      if (!isHoveredRef.current && !isDraggingRef.current) {
         const cycle = cycleWidthRef.current
         if (cycle > 0) {
-          applyTransform(offsetRef.current + (speed * delta) / 1000)
+          const movement = (speed * delta) / 1000
+          applyTransform(offsetRef.current + movement)
         }
       }
 
@@ -142,40 +142,31 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
         window.clearTimeout(releaseManualTimerRef.current)
       }
     }
-  }, [isDragging, isHovered, speed])
+  }, [applyTransform, speed])
 
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+  const handlePointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current
-    if (!viewport) {
-      return
-    }
+    if (!viewport) return
 
-    setIsDragging(true)
+    isDraggingRef.current = true
     dragStartXRef.current = event.clientX
     dragStartOffsetRef.current = offsetRef.current
 
     viewport.setPointerCapture(event.pointerId)
-  }
+  }, [])
 
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!isDragging) {
-      return
-    }
-
-    const viewport = viewportRef.current
-    if (!viewport) {
-      return
-    }
+  const handlePointerMove = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return
 
     const deltaX = event.clientX - dragStartXRef.current
     applyTransform(dragStartOffsetRef.current - deltaX)
-  }
+  }, [applyTransform])
 
-  const handlePointerUp = () => {
-    setIsDragging(false)
-  }
+  const handlePointerUp = useCallback(() => {
+    isDraggingRef.current = false
+  }, [])
 
-  const handleWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+  const handleWheel = useCallback((event: ReactWheelEvent<HTMLDivElement>) => {
     const dominantDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
     if (Math.abs(dominantDelta) < 0.5) {
       return
@@ -188,11 +179,20 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
       window.clearTimeout(releaseManualTimerRef.current)
     }
 
-    setIsHovered(true)
+    // Update ref without triggering re-render
+    isHoveredRef.current = true
     releaseManualTimerRef.current = window.setTimeout(() => {
-      setIsHovered(false)
+      isHoveredRef.current = false
     }, 700)
-  }
+  }, [applyTransform])
+
+  const handleMouseEnter = useCallback(() => {
+    isHoveredRef.current = true
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    isHoveredRef.current = false
+  }, [])
 
   return (
     <section id="refactor-only" className="relative px-4 py-16 sm:px-6 md:px-12 md:py-24">
@@ -204,8 +204,8 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
         <div className="overflow-hidden rounded-3xl border border-white/12 bg-[#0a0d13]/85 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)] sm:p-6">
           <div
             ref={viewportRef}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
