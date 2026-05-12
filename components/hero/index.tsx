@@ -40,7 +40,7 @@ export function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="w-full max-w-[92vw] rounded-xl px-2 py-2 backdrop-blur-[1px] sm:max-w-[80vw] sm:px-3"
         >
-          <p className="mb-2 font-mono text-[10px] tracking-[0.22em] text-white/85 sm:text-xs sm:tracking-[0.28em]">00 — BUILDING SOLUTIONS</p>
+          <p className="mb-2 font-mono text-[10px] tracking-[0.22em] text-white/85 sm:text-xs sm:tracking-[0.28em]">00 — PORTFOLIO</p>
           <h2 className="font-sans text-[clamp(2.3rem,11vw,5.2rem)] font-light leading-[0.92] tracking-tight text-balance text-white [text-shadow:0_6px_26px_rgba(0,0,0,0.9)]">
             PRINCE
             <br />
