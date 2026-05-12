@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { BriefcaseBusiness } from "lucide-react"
 
 const experiences = [
   {
@@ -39,13 +38,9 @@ export function Experience() {
           transition={{ duration: 0.7 }}
           className="rounded-3xl border border-white/15 bg-[#0a0d13] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
         >
-          <div className="mb-5 flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5">
-              <BriefcaseBusiness className="h-4 w-4 text-white/85" />
-            </span>
+          <div className="mb-5 flex items-center p-2 gap-3">
             <h3 className="mb-0.5 font-mono text-[13px] tracking-[0.22em] text-[#3b82f6]">Experience</h3>
-          </div>
-
+           </div>
           <ul className="space-y-4">
             {experiences.map((item) => (
               <li key={item.role} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
