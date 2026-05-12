@@ -1,31 +1,172 @@
 "use client"
 
 import { motion } from "framer-motion"
+import {
+  SiDocker,
+  SiFigma,
+  SiGit,
+  SiJavascript,
+  SiMongodb,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript,
+  SiHtml5,
+  SiPython,
+  SiFirebase,
+} from "react-icons/si"
 
-const techItems = [
-  "HTML",
-  "CSS",
-  "TAILWIND",
-  "JAVASCRIPT",
-  "NEXT.JS",
-  "REACTJS",
-  "NODE.JS",
-  "EXPRESS.JS",
-  "TYPESCRIPT",
-  "SHADCNUI",
-  "PYTHON",
-  "JAVA",
-  "MONGODB",
-  "MYSQL",
-  "DOCKER",
-  "GIT",
-  "FIGMA",
-]
+import { LogoLoop } from "@/components/LogoLoop"
+import { FaCss3Alt } from "react-icons/fa"
 
 const concepts = [
   "FULLSTACK",
   "UI/UX",
   "WEB DEV",
+]
+
+const logoItems = [
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiReact className="w-15 h-15" aria-hidden />
+        <span className="sr-only">React</span>
+      </span>
+    ),
+    title: "React",
+    ariaLabel: "React",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiNextdotjs className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Next.js</span>
+      </span>
+    ),
+    title: "Next.js",
+    ariaLabel: "Next.js",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiTailwindcss className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Tailwind CSS</span>
+      </span>
+    ),
+    title: "Tailwind CSS",
+    ariaLabel: "Tailwind CSS",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiTypescript className="w-15 h-15" aria-hidden />
+        <span className="sr-only">TypeScript</span>
+      </span>
+    ),
+    title: "TypeScript",
+    ariaLabel: "TypeScript",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiNodedotjs className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Node.js</span>
+      </span>
+    ),
+    title: "Node.js",
+    ariaLabel: "Node.js",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiJavascript className="w-15 h-15" aria-hidden />
+        <span className="sr-only">JavaScript</span>
+      </span>
+    ),
+    title: "JavaScript",
+    ariaLabel: "JavaScript",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiMongodb className="w-15 h-15" aria-hidden />
+        <span className="sr-only">MongoDB</span>
+      </span>
+    ),
+    title: "MongoDB",
+    ariaLabel: "MongoDB",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiGit className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Git</span>
+      </span>
+    ),
+    title: "Git",
+    ariaLabel: "Git",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiDocker className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Docker</span>
+      </span>
+    ),
+    title: "Docker",
+    ariaLabel: "Docker",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiFigma className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Figma</span>
+      </span>
+    ),
+    title: "Figma",
+    ariaLabel: "Figma",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiHtml5 className="w-15 h-15" aria-hidden />
+        <span className="sr-only">HTML</span>
+      </span>
+    ),
+    title: "HTML",
+    ariaLabel: "HTML",
+  },
+  {
+  node: (
+    <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+      <FaCss3Alt className="w-15 h-15" aria-hidden />
+      <span className="sr-only">CSS</span>
+    </span>
+  ),
+  title: "CSS",
+  ariaLabel: "CSS",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiPython className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Python</span>
+      </span>
+    ),
+    title: "Python",
+    ariaLabel: "Python",
+  },
+  {
+    node: (
+      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
+        <SiFirebase className="w-15 h-15" aria-hidden />
+        <span className="sr-only">Firebase</span>
+      </span>
+    ),
+    title: "Firebase",
+    ariaLabel: "Firebase",
+  },
 ]
 
 function MarqueeRow({ items, direction = "left" }: { items: string[]; direction?: "left" | "right" }) {
@@ -78,9 +219,18 @@ export function TechMarquee() {
         <p className="font-mono text-xs tracking-[0.3em] text-muted-foreground mb-4">05 - STACK / ROLE</p>
       </motion.div>
 
-      {/* Marquee Rows */}
       <div className="space-y-4">
-        <MarqueeRow items={techItems} direction="left" />
+        <LogoLoop
+          logos={logoItems}
+          direction="left"
+          speed={100}
+          pauseOnHover={true}
+          fadeOut={false}
+          scaleOnHover={true}
+          logoHeight={72}
+          gap={50}
+          ariaLabel="Technology logos"
+        />
         <MarqueeRow items={concepts} direction="right" />
       </div>
     </section>
