@@ -10,7 +10,7 @@ const siteUrl =
 const siteName = "Prince Tan Portfolio"
 const siteTitle = "Prince Tan | Full-Stack Developer"
 const siteDescription =
-  "I’m Prince Tan, a full-stack developer focused on building modern and user-experience web applications. My projects mostly includes web development."
+  "I’m Prince Tan, a full-stack developer focused on building modern, user-friendly web applications. Explore my projects in web development, Next.js, React, and full-stack engineering."
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -65,6 +65,10 @@ const personSchema = {
   jobTitle: "Full-Stack Developer",
   url: siteUrl,
   mainEntityOfPage: siteUrl,
+  sameAs: [
+    "https://github.com/lowish",
+    "https://linkedin.com/in/pwtandev",
+  ],
 }
 
 export default function RootLayout({
