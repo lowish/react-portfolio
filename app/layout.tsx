@@ -69,6 +69,11 @@ const personSchema = {
     "https://github.com/lowish",
     "https://linkedin.com/in/pwtandev",
   ],
+  alumniOf: {
+  "@type": "CollegeOrUniversity",
+  name: "Holy Angel University",
+  course: "Bachelor of Science in Web Development",
+},
 }
 
 export default function RootLayout({
