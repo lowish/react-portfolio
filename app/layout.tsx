@@ -86,6 +86,7 @@ knowsAbout: [
     "Full-Stack Development",
     "Web Development",
   ],
+  nationality: "Filipino",
 }
 
 export default function RootLayout({
