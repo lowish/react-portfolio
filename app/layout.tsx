@@ -74,6 +74,18 @@ const personSchema = {
   name: "Holy Angel University",
   course: "Bachelor of Science in Web Development",
 },
+knowsAbout: [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Node.js",
+    "Express.js",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Full-Stack Development",
+    "Web Development",
+  ],
 }
 
 export default function RootLayout({
