@@ -1,8 +1,4 @@
-# React Portfolio
-
-A modern portfolio website built with Next.js, React, TypeScript, and Tailwind CSS.
-
-## Preview
+# Personal Portfolio
 
 ![Portfolio Preview](public/preview.jpg)
 
@@ -11,7 +7,9 @@ A modern portfolio website built with Next.js, React, TypeScript, and Tailwind C
 - Node.js 18+
 - npm 9+
 
-## Installation
+## Installation / Customization
+
+Feel free to fork this project and customize it with your own information and style.
 
 1. Clone the repository.
 2. Move into the project directory.
