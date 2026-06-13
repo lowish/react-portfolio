@@ -17,7 +17,7 @@ import {
   SiFirebase,
 } from "react-icons/si"
 
-import { LogoLoop } from "@/components/LogoLoop"
+import { LogoLoop } from "@/components/ui/LogoLoop"
 import { FaCss3Alt } from "react-icons/fa"
 
 const concepts = [
