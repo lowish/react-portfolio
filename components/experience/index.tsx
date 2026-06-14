@@ -2,6 +2,16 @@
 
 import { motion } from "framer-motion"
 
+/** Thin geometric plus sign (two 1px lines) used to mark a corner. */
+function CornerPlus({ className }: { className?: string }) {
+  return (
+    <span aria-hidden="true" className={`pointer-events-none absolute h-[14px] w-[14px] ${className ?? ""}`}>
+      <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-neutral-50" />
+      <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-neutral-50" />
+    </span>
+  )
+}
+
 const experiences = [
   {
     role: "UI/UX Designer",
@@ -36,14 +46,19 @@ export function Experience() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="rounded-3xl border border-white/15 bg-[#0a0d13] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
+          className="relative border border-white/30 bg-[#0a0d13] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
         >
+          <CornerPlus className="-left-[7px] -top-[7px]" />
+          <CornerPlus className="-right-[7px] -top-[7px]" />
+          <CornerPlus className="-bottom-[7px] -left-[7px]" />
+          <CornerPlus className="-bottom-[7px] -right-[7px]" />
+
           <div className="mb-5 flex items-center p-2 gap-3">
             <h3 className="mb-0.5 font-mono text-[13px] tracking-[0.22em] text-[#3b82f6]">Experience</h3>
            </div>
           <ul className="space-y-4">
             {experiences.map((item) => (
-              <li key={item.role} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <li key={item.role} className="border border-white/10 bg-white/[0.03] p-4">
                 <div className="mb-2 flex items-center justify-between gap-3">
                   <p className="font-mono text-sm leading-relaxed text-white md:text-base">{item.role}</p>
                   <span className="font-mono text-[10px] tracking-[0.14em] text-white/55">{item.period}</span>
