@@ -3,6 +3,16 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
 
+/** Thin geometric plus sign (two 1px lines) used to mark a corner. */
+function CornerPlus({ className }: { className?: string }) {
+  return (
+    <span aria-hidden="true" className={`pointer-events-none absolute h-[14px] w-[14px] ${className ?? ""}`}>
+      <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-neutral-50" />
+      <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-neutral-50" />
+    </span>
+  )
+}
+
 export function About() {
   return (
     <section id="about" className="relative overflow-hidden px-4 py-20 sm:px-6 md:px-12 md:py-28">
@@ -18,8 +28,13 @@ export function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="order-2 rounded-2xl border border-white/10 bg-[#0b1018] p-6 lg:order-1 md:p-8"
+            className="relative order-2 border border-white/30 bg-[#0b1018] p-6 lg:order-1 md:p-8"
           >
+            <CornerPlus className="-left-[7px] -top-[7px]" />
+            <CornerPlus className="-right-[7px] -top-[7px]" />
+            <CornerPlus className="-bottom-[7px] -left-[7px]" />
+            <CornerPlus className="-bottom-[7px] -right-[7px]" />
+
             <p className="mb-4 font-mono text-[11px] tracking-[0.22em] text-[#3b82f6]">DESCRIPTION</p>
             <p className="mb-4 font-mono text-sm leading-relaxed text-white/80 md:text-base">
               I&apos;m Prince Tan, a full-stack developer and designer focused on building modern, user-centered web applications.
