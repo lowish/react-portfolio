@@ -54,7 +54,7 @@ export function About() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="order-1 mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:order-2 lg:max-w-[290px]"
           >
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[10px] border border-white/15 bg-[#11151e] p-3 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
+            <div className="relative aspect-[3/4] overflow-hidden border border-white/15 bg-[#11151e] p-3 shadow-[0_24px_60px_rgba(0,0,0,0.45)]">
               <Image
                 src="/prince.jpg"
                 alt="Prince portrait"
