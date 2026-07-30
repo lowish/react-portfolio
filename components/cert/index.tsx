@@ -167,10 +167,10 @@ export function Certificates() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="border-y border-white/8"
+          className="border-y border-white/30"
         >
           {certificates.map((item, index) => (
-            <div key={item.title} className={index !== certificates.length - 1 ? "border-b border-white/8" : ""}>
+            <div key={item.title} className={index !== certificates.length - 1 ? "border-b border-white/30" : ""}>
               <CertificateRow
                 item={item}
                 active={preview.visible && preview.image === item.image}
