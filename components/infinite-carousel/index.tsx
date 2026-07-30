@@ -37,7 +37,7 @@ const defaultItems: CarouselItem[] = [
 
 function CarouselCard({ item }: { item: CarouselItem }) {
   return (
-    <article className="group relative h-full w-[220px] shrink-0 overflow-hidden rounded-2xl border border-white/15 bg-[#0d1118] shadow-[0_12px_38px_rgba(0,0,0,0.38)] transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_18px_50px_rgba(0,0,0,0.48)] sm:w-[250px]">
+    <article className="group relative h-full w-[220px] shrink-0 overflow-hidden rounded-l bg-[#0d1118] shadow-[0_12px_38px_rgba(0,0,0,0.38)] transition-all duration-300 will-change-transform hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_18px_50px_rgba(0,0,0,0.48)] sm:w-[250px]">
       <div className="relative aspect-[4/5] w-full overflow-hidden">
         <Image
           src={item.image}
@@ -201,7 +201,7 @@ export function InfiniteCarousel({ items = defaultItems, speed = 55 }: InfiniteC
           <h2 className="font-sans text-2xl font-light italic sm:text-3xl md:text-5xl">Experience Highlights</h2>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-white/12 bg-[#0a0d13]/85 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)] sm:p-6">
+        <div className="overflow-hidden rounded-s border border-white/40 bg-[#0a0d13]/85 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.42)] sm:p-6">
           <div
             ref={viewportRef}
             onMouseEnter={handleMouseEnter}
