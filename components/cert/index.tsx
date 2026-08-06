@@ -1,36 +1,11 @@
 "use client"
 
+import Link from "next/link"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { type MouseEvent, useEffect, useState } from "react"
 
-type CertificateItem = {
-  title: string
-  year: string
-  image: string
-  href?: string
-}
-
-const certificates: CertificateItem[] = [
-  {
-    title: "TechTalk",
-    year: "2025",
-    image: "TechTalk.png",
-    href: "https://pdfhost.io/v/JwvZfL98bp_TAN__PRINCE_WILLIAM_M__Certificate_of_Participation_TechTalk"
-  },
-  {
-    title: "AI Conference",
-    year: "2025",
-    image: "/AI%20Conference.png",
-    href: "https://pdfhost.io/v/6qMFR8gQDj_PRINCE_WILLIAM_M__TAN_Certification_AI_CONFERENCE",
-  },
-  {
-    title: "Regional CyberSecurity",
-    year: "2025",
-    image: "/4th%20Regional.png",
-    href: "https://pdfhost.io/v/JaS5RJLUCd_PRINCE_WILLIAM_M__TAN_Certificate_of_Participation",
-  },
-]
+import { certificates, type CertificateItem } from "./certificates-data"
 
 type PreviewState = {
   visible: boolean
@@ -152,15 +127,25 @@ export function Certificates() {
       <FloatingPreview image={preview.image} visible={preview.visible} x={preview.x} y={preview.y} />
 
       <div className="mx-auto max-w-[1100px]">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-10 md:mb-14"
-        >
-          <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">03 - CERT</p>
-        </motion.div>
+        <div className="mb-10 flex items-end justify-between gap-4 md:mb-14">
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="font-mono text-xs tracking-[0.28em] text-muted-foreground"
+          >
+            03 - CERT
+          </motion.p>
+
+          <Link
+            href="/certificates"
+            className="group inline-flex items-center gap-2 font-mono text-xs tracking-[0.18em] text-foreground transition-colors duration-300 hover:text-[#3b82f6]"
+          >
+            VIEW ALL
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </Link>
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}
