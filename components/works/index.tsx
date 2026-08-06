@@ -12,15 +12,11 @@ export function Works() {
           <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">01 - WORKS</p>
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 border-b border-border px-1 pb-2 font-mono text-xs tracking-[0.18em] text-foreground transition-colors duration-300 hover:text-[#3b82f6]"
+            className="group inline-flex items-center gap-2 px-1 pb-3 font-mono text-xs tracking-[0.18em] text-foreground transition-colors duration-300 hover:text-[#3b82f6]"
           >
-            View All
+            VIEW ALL
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </Link>
-        </div>
-
-        <div className="mb-8 md:mb-10">
-          <h2 className="font-sans text-2xl font-light italic sm:text-3xl md:text-5xl">Personal Projects</h2>
         </div>
 
         {projects.map((project, index) => {
