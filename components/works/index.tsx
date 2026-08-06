@@ -1,37 +1,25 @@
 "use client"
+import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
-const projects = [
-  {
-    title: "DEVKIT",
-    image: "/Devkit.jpg",
-    url: "https://devkit-ph.vercel.app/",
-    description:
-      "A curated collection of essential resources for modern developers, from AI assistants to hosting platforms and component libraries..",
-  },
-
-  {
-    title: "HomeVia",
-    image: "/homevia.jpg",
-    url: "https://homevia-eta.vercel.app/",
-    description:
-      "HomeVia is a real estate platform. It showcases properties in the Philippines, helping users explore and discover their perfect place to live..",
-  },
-  {
-    title: "Campus Hau",
-    image: "/CampusHAU.jpg",
-    url: "https://campushau.vercel.app/",
-    description:
-      "CampusHau is a campus-focused web platform built on the MEVN stack to enhance streamline student access to school-related services and information.",
-  },
-]
+import { projects } from "./projects-data"
 
 export function Works() {
   return (
     <section id="works" className="relative px-4 py-20 sm:px-6 md:px-12 md:py-28">
       <div className="mx-auto max-w-[1000px]">
-        <div className="mb-8 md:mb-10">
+        <div className="mb-8 flex items-end justify-between gap-4 md:mb-10">
           <p className="mb-3 font-mono text-xs tracking-[0.28em] text-muted-foreground">01 - WORKS</p>
+          <Link
+            href="/projects"
+            className="group inline-flex items-center gap-2 border-b border-border px-1 pb-2 font-mono text-xs tracking-[0.18em] text-foreground transition-colors duration-300 hover:text-[#3b82f6]"
+          >
+            View All
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </Link>
+        </div>
+
+        <div className="mb-8 md:mb-10">
           <h2 className="font-sans text-2xl font-light italic sm:text-3xl md:text-5xl">Personal Projects</h2>
         </div>
 
@@ -39,7 +27,7 @@ export function Works() {
           return (
             <div
               key={project.title}
-              className={`overflow-hidden rounded-[26px] border border-white/15 bg-[#0a0d13] shadow-[0_20px_70px_rgba(0,0,0,0.5)] ${
+              className={`overflow-hidden border border-white/15 bg-[#0a0d13] shadow-[0_20px_70px_rgba(0,0,0,0.5)] ${
                 index === 0 ? "shadow-[0_30px_90px_rgba(0,0,0,0.55)]" : "mt-12"
               }`}
             >
