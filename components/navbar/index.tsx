@@ -55,13 +55,13 @@ export function Navbar() {
       autoAlpha: 1,
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       ease: "power4.inOut",
-      duration: 0.75,
+      duration: 0.65,
     })
       .to(
         ".menu-backdrop",
         {
           opacity: 1,
-          duration: 0.65,
+          duration: 0.45,
           ease: "power2.out",
         },
         "<",
@@ -96,7 +96,7 @@ export function Navbar() {
           yPercent: 0,
           skewX: 0,
           opacity: 1,
-          duration: 0.7,
+          duration: 0.3,
           ease: "power3.out",
           stagger: {
             each: 0.012,
@@ -110,7 +110,7 @@ export function Navbar() {
       yPercent: -120,
       skewX: -10,
       opacity: 0,
-      duration: 0.7,
+      duration: 0.3,
       ease: "power3.in",
       stagger: {
         each: 0.012,
@@ -123,7 +123,7 @@ export function Navbar() {
           skewX: -12,
           opacity: 0,
           y: -120,
-          duration: 0.9,
+          duration: 0.5,
           stagger: 0.08,
           ease: "power3.in",
         },
@@ -133,7 +133,7 @@ export function Navbar() {
         ".menu-backdrop",
         {
           opacity: 0,
-          duration: 0.65,
+          duration: 0.45,
           ease: "power2.in",
         },
         "<",
@@ -151,7 +151,7 @@ export function Navbar() {
           autoAlpha: 0,
           clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
           ease: "power4.inOut",
-          duration: 0.75,
+          duration: 0.45,
         },
         "-=0.45",
       )
