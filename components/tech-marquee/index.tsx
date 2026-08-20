@@ -22,8 +22,9 @@ import { FaCss3Alt } from "react-icons/fa"
 
 const concepts = [
   "FULLSTACK",
-  "UI/UX",
   "WEB DEV",
+  "AI ENGINEER",
+  "DEVELOPER"
 ]
 
 const logoItems = [
