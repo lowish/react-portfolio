@@ -1,5 +1,7 @@
 "use client"
 
+import type { CSSProperties } from "react"
+import type { IconType } from "react-icons"
 import { motion } from "framer-motion"
 import {
   SiDocker,
@@ -27,148 +29,36 @@ const concepts = [
   "DEVELOPER"
 ]
 
-const logoItems = [
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiReact className="w-15 h-15" aria-hidden />
-        <span className="sr-only">React</span>
-      </span>
-    ),
-    title: "React",
-    ariaLabel: "React",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiNextdotjs className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Next.js</span>
-      </span>
-    ),
-    title: "Next.js",
-    ariaLabel: "Next.js",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiTailwindcss className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Tailwind CSS</span>
-      </span>
-    ),
-    title: "Tailwind CSS",
-    ariaLabel: "Tailwind CSS",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiTypescript className="w-15 h-15" aria-hidden />
-        <span className="sr-only">TypeScript</span>
-      </span>
-    ),
-    title: "TypeScript",
-    ariaLabel: "TypeScript",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiNodedotjs className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Node.js</span>
-      </span>
-    ),
-    title: "Node.js",
-    ariaLabel: "Node.js",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiJavascript className="w-15 h-15" aria-hidden />
-        <span className="sr-only">JavaScript</span>
-      </span>
-    ),
-    title: "JavaScript",
-    ariaLabel: "JavaScript",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiMongodb className="w-15 h-15" aria-hidden />
-        <span className="sr-only">MongoDB</span>
-      </span>
-    ),
-    title: "MongoDB",
-    ariaLabel: "MongoDB",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiGit className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Git</span>
-      </span>
-    ),
-    title: "Git",
-    ariaLabel: "Git",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiDocker className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Docker</span>
-      </span>
-    ),
-    title: "Docker",
-    ariaLabel: "Docker",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiFigma className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Figma</span>
-      </span>
-    ),
-    title: "Figma",
-    ariaLabel: "Figma",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiHtml5 className="w-15 h-15" aria-hidden />
-        <span className="sr-only">HTML</span>
-      </span>
-    ),
-    title: "HTML",
-    ariaLabel: "HTML",
-  },
-  {
+const techLogos: { Icon: IconType; title: string; color: string }[] = [
+  { Icon: SiReact, title: "React", color: "#61DAFB" },
+  { Icon: SiNextdotjs, title: "Next.js", color: "#FFFFFF" },
+  { Icon: SiTailwindcss, title: "Tailwind CSS", color: "#38BDF8" },
+  { Icon: SiTypescript, title: "TypeScript", color: "#3178C6" },
+  { Icon: SiNodedotjs, title: "Node.js", color: "#5FA04E" },
+  { Icon: SiJavascript, title: "JavaScript", color: "#F7DF1E" },
+  { Icon: SiMongodb, title: "MongoDB", color: "#47A248" },
+  { Icon: SiGit, title: "Git", color: "#F05032" },
+  { Icon: SiDocker, title: "Docker", color: "#2496ED" },
+  { Icon: SiFigma, title: "Figma", color: "#F24E1E" },
+  { Icon: SiHtml5, title: "HTML", color: "#E34F26" },
+  { Icon: FaCss3Alt, title: "CSS", color: "#1572B6" },
+  { Icon: SiPython, title: "Python", color: "#3776AB" },
+  { Icon: SiFirebase, title: "Firebase", color: "#FFCA28" },
+]
+
+const logoItems = techLogos.map(({ Icon, title, color }) => ({
   node: (
-    <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-      <FaCss3Alt className="w-15 h-15" aria-hidden />
-      <span className="sr-only">CSS</span>
+    <span
+      className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors duration-300 hover:text-[var(--brand-color)]"
+      style={{ "--brand-color": color } as CSSProperties}
+    >
+      <Icon className="w-15 h-15" aria-hidden />
+      <span className="sr-only">{title}</span>
     </span>
   ),
-  title: "CSS",
-  ariaLabel: "CSS",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiPython className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Python</span>
-      </span>
-    ),
-    title: "Python",
-    ariaLabel: "Python",
-  },
-  {
-    node: (
-      <span className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors hover:text-white">
-        <SiFirebase className="w-15 h-15" aria-hidden />
-        <span className="sr-only">Firebase</span>
-      </span>
-    ),
-    title: "Firebase",
-    ariaLabel: "Firebase",
-  },
-]
+  title,
+  ariaLabel: title,
+}))
 
 function MarqueeRow({ items, direction = "left" }: { items: string[]; direction?: "left" | "right" }) {
   const duplicatedItems = [...items, ...items, ...items, ...items]
