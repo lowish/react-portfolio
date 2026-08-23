@@ -32,15 +32,15 @@ const techLogos: TechLogo[] = [
   { kind: "image", title: "HTML", src: "/logos/html5.svg" },
   { kind: "image", title: "CSS", src: "/logos/css3.svg" },
   { kind: "image", title: "JavaScript", src: "/logos/javascript.svg" },
-  { kind: "icon", title: "Tailwind CSS", Icon: SiTailwindcss, color: "#38BDF8" },
-  { kind: "icon", title: "React", Icon: SiReact, color: "#61DAFB" },
+  { kind: "image", title: "Tailwind CSS", src: "/logos/tailwindcss.svg" },
+  { kind: "image", title: "React", src: "/logos/react.svg" },
   // The official Next.js mark is black; white is its sanctioned reverse for dark backgrounds.
-  { kind: "icon", title: "Next.js", Icon: SiNextdotjs, color: "#FFFFFF" },
+  { kind: "image", title: "Next.js", src: "/logos/nextjs.svg" },
   {kind: "image", title: "ExpressJs", src: "/logos/express.svg" },
   { kind: "image", title: "Node.js", src: "/logos/nodejs.svg" },
   { kind: "image", title: "TypeScript", src: "/logos/typescript.svg" },
   { kind: "image", title: "MongoDB", src: "/logos/mongodb.svg" },
-  { kind: "icon", title: "Git", Icon: SiGit, color: "#F05032" },
+  { kind: "image", title: "Git", src: "/logos/git.svg" },
   { kind: "image", title: "Docker", src: "/logos/docker.svg" },
   { kind: "image", title: "Python", src: "/logos/python.svg" },
   { kind: "image", title: "Firebase", src: "/logos/firebase.svg" },
@@ -110,7 +110,7 @@ function MarqueeRow({ items, direction = "left" }: { items: string[]; direction?
             }}
           >
             {item}
-            <span className="mx-8 text-white/20">•</span>
+            <span className="mx-8 text-white/20">=</span>
           </span>
         ))}
       </motion.div>
