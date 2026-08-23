@@ -1,26 +1,12 @@
 "use client"
 
 import type { CSSProperties } from "react"
-import type { IconType } from "react-icons"
+import Image from "next/image"
 import { motion } from "framer-motion"
-import {
-  SiDocker,
-  SiFigma,
-  SiGit,
-  SiJavascript,
-  SiMongodb,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiReact,
-  SiTailwindcss,
-  SiTypescript,
-  SiHtml5,
-  SiPython,
-  SiFirebase,
-} from "react-icons/si"
+import type { IconType } from "react-icons"
+import { SiGit, SiNextdotjs, SiReact, SiTailwindcss } from "react-icons/si"
 
-import { LogoLoop } from "@/components/ui/LogoLoop"
-import { FaCss3Alt } from "react-icons/fa"
+import { LogoLoop, type LogoItem } from "@/components/ui/LogoLoop"
 
 const concepts = [
   "FULLSTACK",
@@ -29,35 +15,71 @@ const concepts = [
   "DEVELOPER"
 ]
 
-const techLogos: { Icon: IconType; title: string; color: string }[] = [
-  { Icon: SiReact, title: "React", color: "#61DAFB" },
-  { Icon: SiNextdotjs, title: "Next.js", color: "#FFFFFF" },
-  { Icon: SiTailwindcss, title: "Tailwind CSS", color: "#38BDF8" },
-  { Icon: SiTypescript, title: "TypeScript", color: "#3178C6" },
-  { Icon: SiNodedotjs, title: "Node.js", color: "#5FA04E" },
-  { Icon: SiJavascript, title: "JavaScript", color: "#F7DF1E" },
-  { Icon: SiMongodb, title: "MongoDB", color: "#47A248" },
-  { Icon: SiGit, title: "Git", color: "#F05032" },
-  { Icon: SiDocker, title: "Docker", color: "#2496ED" },
-  { Icon: SiFigma, title: "Figma", color: "#F24E1E" },
-  { Icon: SiHtml5, title: "HTML", color: "#E34F26" },
-  { Icon: FaCss3Alt, title: "CSS", color: "#1572B6" },
-  { Icon: SiPython, title: "Python", color: "#3776AB" },
-  { Icon: SiFirebase, title: "Firebase", color: "#FFCA28" },
+/**
+ * A stack logo reaches its authentic look one of two ways:
+ *
+ * - "icon"  — marks that are officially a single hue. Drawn from react-icons and tinted with the
+ *             brand color, since one CSS color reproduces them exactly.
+ * - "image" — marks whose official artwork carries several hues or gradients that no single CSS
+ *             color can express (Python's two-tone snakes, Figma's five shapes, MongoDB's shaded
+ *             leaf). Served from the original SVG in /public/logos.
+ */
+type TechLogo =
+  | { kind: "icon"; title: string; Icon: IconType; color: string }
+  | { kind: "image"; title: string; src: string }
+
+const techLogos: TechLogo[] = [
+  { kind: "image", title: "HTML", src: "/logos/html5.svg" },
+  { kind: "image", title: "CSS", src: "/logos/css3.svg" },
+  { kind: "image", title: "JavaScript", src: "/logos/javascript.svg" },
+  { kind: "icon", title: "Tailwind CSS", Icon: SiTailwindcss, color: "#38BDF8" },
+  { kind: "icon", title: "React", Icon: SiReact, color: "#61DAFB" },
+  // The official Next.js mark is black; white is its sanctioned reverse for dark backgrounds.
+  { kind: "icon", title: "Next.js", Icon: SiNextdotjs, color: "#FFFFFF" },
+  {kind: "image", title: "ExpressJs", src: "/logos/express.svg" },
+  { kind: "image", title: "Node.js", src: "/logos/nodejs.svg" },
+  { kind: "image", title: "TypeScript", src: "/logos/typescript.svg" },
+  { kind: "image", title: "MongoDB", src: "/logos/mongodb.svg" },
+  { kind: "icon", title: "Git", Icon: SiGit, color: "#F05032" },
+  { kind: "image", title: "Docker", src: "/logos/docker.svg" },
+  { kind: "image", title: "Python", src: "/logos/python.svg" },
+  { kind: "image", title: "Firebase", src: "/logos/firebase.svg" },
+  {kind: "image", title: "AWS", src: "/logos/aws.svg" },
 ]
 
-const logoItems = techLogos.map(({ Icon, title, color }) => ({
-  node: (
-    <span
-      className="inline-flex items-center justify-center w-16 h-16 text-white/70 transition-colors duration-300 hover:text-[var(--brand-color)]"
-      style={{ "--brand-color": color } as CSSProperties}
-    >
-      <Icon className="w-15 h-15" aria-hidden />
-      <span className="sr-only">{title}</span>
+/**
+ * Renders either variant at the same 64px box / 60px mark, resting muted and resolving to the
+ * authentic brand appearance on hover: icons tint to their brand color, images drop grayscale.
+ */
+function TechLogoMark({ logo }: { logo: TechLogo }) {
+  return (
+    <span className="group/logo inline-flex items-center justify-center w-16 h-16">
+      {logo.kind === "icon" ? (
+        <logo.Icon
+          className="w-15 h-15 text-white/70 transition duration-300 group-hover/logo:text-[var(--brand-color)] motion-reduce:transition-none"
+          style={{ "--brand-color": logo.color } as CSSProperties}
+          aria-hidden
+        />
+      ) : (
+        <Image
+          src={logo.src}
+          alt=""
+          width={60}
+          height={60}
+          draggable={false}
+          aria-hidden
+          className="w-15 h-15 object-contain opacity-70 grayscale transition duration-300 group-hover/logo:opacity-100 group-hover/logo:grayscale-0 motion-reduce:transition-none"
+        />
+      )}
+      <span className="sr-only">{logo.title}</span>
     </span>
-  ),
-  title,
-  ariaLabel: title,
+  )
+}
+
+const logoItems: LogoItem[] = techLogos.map((logo) => ({
+  node: <TechLogoMark logo={logo} />,
+  title: logo.title,
+  ariaLabel: logo.title,
 }))
 
 function MarqueeRow({ items, direction = "left" }: { items: string[]; direction?: "left" | "right" }) {
@@ -80,11 +102,11 @@ function MarqueeRow({ items, direction = "left" }: { items: string[]; direction?
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = "white"
-              e.currentTarget.style.WebkitTextStroke = "none"
+              e.currentTarget.style.webkitTextStroke = "none"
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = "transparent"
-              e.currentTarget.style.WebkitTextStroke = "1px rgba(255,255,255,0.3)"
+              e.currentTarget.style.webkitTextStroke = "1px rgba(255,255,255,0.3)"
             }}
           >
             {item}
