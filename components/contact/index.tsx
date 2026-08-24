@@ -77,7 +77,7 @@ export function Contact() {
       </motion.a>
 
       {/* Footer Info */}
-      <div className="border-t border-white/10 px-4 py-8 sm:px-6 md:px-12">
+      <div className="border-t border-white/10 px-4 pb-28 pt-8 sm:px-6 md:px-12 md:pb-32">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           {/* Location */}
           <div className="font-mono text-xs tracking-widest text-muted-foreground">
