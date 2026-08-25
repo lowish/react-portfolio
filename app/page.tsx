@@ -9,6 +9,7 @@ import { Experience } from "@/components/experience"
 import { Certificates } from "@/components/cert"
 import { InfiniteCarousel } from "@/components/infinite-carousel"
 import { TechMarquee } from "@/components/tech-marquee"
+import { Connect } from "@/components/connect"
 import { Contact } from "@/components/contact"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { SectionBlend } from "@/components/background/section-blend"
@@ -59,6 +60,7 @@ export default function Home() {
           <TechMarquee />
           <Contact />
         </main>
+        <Connect />
       </SmoothScroll>
     </GetInTouchModal>
   )
